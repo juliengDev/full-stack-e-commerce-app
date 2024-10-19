@@ -13,7 +13,7 @@ export async function Header() {
   try {
     header = await fetchHeader()
   } catch (error) {
-    console.log(error)
+    // console.log(error)
   }
 
   return (
