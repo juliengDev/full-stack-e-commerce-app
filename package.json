@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "license": "MIT",
+  "engines": {
+  "node": "20.x"
+},
   "scripts": {
     "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts nodemon",
     "stripe:webhooks": "stripe listen --forward-to localhost:8000/stripe/webhooks",
@@ -44,7 +47,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "7.45.4",
     "react-router-dom": "5.3.4",
-    "stripe": "^10.2.0"
+    "stripe": "^10.2.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.1.6",
