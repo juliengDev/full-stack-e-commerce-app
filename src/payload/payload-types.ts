@@ -137,7 +137,7 @@ export interface Page {
         }[];
         populateBy?: ('collection' | 'selection') | null;
         relationTo?: 'products' | null;
-         categories?: string[] | Category[];
+        categories?: (string | Category)[] | null;
         limit?: number | null;
         selectedDocs?:
           | {
@@ -287,7 +287,7 @@ export interface Product {
         }[];
         populateBy?: ('collection' | 'selection') | null;
         relationTo?: 'products' | null;
-        categories?: string[] | Category[];
+        categories?: (string | Category)[] | null;
         limit?: number | null;
         selectedDocs?:
           | {
@@ -380,7 +380,7 @@ export interface Product {
             }[];
             populateBy?: ('collection' | 'selection') | null;
             relationTo?: 'products' | null;
-             categories?: string[] | Category[];
+            categories?: (string | Category)[] | null;
             limit?: number | null;
             selectedDocs?:
               | {
@@ -401,7 +401,7 @@ export interface Product {
           }
       )[]
     | null;
-   categories?: string[] | Category[];
+  categories?: (string | Category)[] | null;
   relatedProducts?: (string | Product)[] | null;
   slug?: string | null;
   skipSync?: boolean | null;

@@ -12,7 +12,6 @@ import classes from './index.module.scss'
 
 const Filters = ({ categories }: { categories: Category[] }) => {
   const { categoryFilters, sort, setCategoryFilters, setSort } = useFilter()
-
   const handleCategories = (categoryId: string) => {
     if (categoryFilters.includes(categoryId)) {
       const updatedCategories = categoryFilters.filter(id => id !== categoryId)

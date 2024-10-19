@@ -19,7 +19,6 @@ export default async function Product({ params: { slug } }) {
   const { isEnabled: isDraftMode } = draftMode()
 
   let product: Product | null = null
-
   try {
     product = await fetchDoc<Product>({
       collection: 'products',
