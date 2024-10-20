@@ -1,12 +1,12 @@
-import { webpackBundler } from '@payloadcms/bundler-webpack' // bundler-import
-import { mongooseAdapter } from '@payloadcms/db-mongodb' // database-adapter-import
+import { webpackBundler } from '@payloadcms/bundler-webpack'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloud } from '@payloadcms/plugin-cloud'
 import nestedDocs from '@payloadcms/plugin-nested-docs'
 import redirects from '@payloadcms/plugin-redirects'
 import seo from '@payloadcms/plugin-seo'
 import type { GenerateTitle } from '@payloadcms/plugin-seo/types'
 import stripePlugin from '@payloadcms/plugin-stripe'
-import { slateEditor } from '@payloadcms/richtext-slate' // editor-import
+import { slateEditor } from '@payloadcms/richtext-slate'
 import dotenv from 'dotenv'
 import path from 'path'
 import { buildConfig } from 'payload/config'
@@ -42,74 +42,56 @@ dotenv.config({
 export default buildConfig({
   admin: {
     user: Users.slug,
-    bundler: webpackBundler(), // bundler-config
+    bundler: webpackBundler(),
     components: {
-      // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: [BeforeLogin],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
       beforeDashboard: [BeforeDashboard],
     },
-    webpack: config => {
-      return {
-        ...config,
-        resolve: {
-          ...config.resolve,
-          alias: {
-            ...config.resolve?.alias,
-            dotenv: path.resolve(__dirname, './dotenv.js'),
-            [path.resolve(
-              __dirname,
-              'collections/Products/hooks/beforeChange',
-            )]: mockModulePath,
-            [path.resolve(
-              __dirname,
-              'collections/Users/hooks/createStripeCustomer',
-            )]: mockModulePath,
-            [path.resolve(__dirname, 'collections/Users/endpoints/customer')]:
-              mockModulePath,
-            [path.resolve(__dirname, 'endpoints/create-payment-intent')]:
-              mockModulePath,
-            [path.resolve(__dirname, 'endpoints/customers')]: mockModulePath,
-            [path.resolve(__dirname, 'endpoints/products')]: mockModulePath,
-            [path.resolve(__dirname, 'endpoints/seed')]: mockModulePath,
-            stripe: mockModulePath,
-            express: mockModulePath,
-          },
+    webpack: config => ({
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve?.alias,
+          dotenv: path.resolve(__dirname, './dotenv.js'),
+          [path.resolve(__dirname, 'collections/Products/hooks/beforeChange')]: mockModulePath,
+          [path.resolve(__dirname, 'collections/Users/hooks/createStripeCustomer')]: mockModulePath,
+          [path.resolve(__dirname, 'collections/Users/endpoints/customer')]: mockModulePath,
+          [path.resolve(__dirname, 'endpoints/create-payment-intent')]: mockModulePath,
+          [path.resolve(__dirname, 'endpoints/customers')]: mockModulePath,
+          [path.resolve(__dirname, 'endpoints/products')]: mockModulePath,
+          [path.resolve(__dirname, 'endpoints/seed')]: mockModulePath,
+          stripe: mockModulePath,
+          express: mockModulePath,
         },
-      }
-    },
+      },
+    }),
   },
-  editor: slateEditor({}), // editor-config
-  // database-adapter-config-start
+  editor: slateEditor({}),
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI,
-  }),
-  // database-adapter-config-end
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  collections: [Pages, Products, Orders, Media, Categories, Users],
-  globals: [Settings, Header, Footer],
-  db: mongooseAdapter({
-    url: process.env.MONGODB_URI || 'mongodb+srv://juliengilbertdev:rLdZJ3jRdatz3v5d@cluster0.w63np.mongodb.net/mycollection?retryWrites=true&w=majority&appName=Cluster0',
+    url:
+      process.env.MONGODB_URI ||
+      'mongodb+srv://juliengilbertdev:rLdZJ3jRdatz3v5d@cluster0.w63np.mongodb.net/mycollection?retryWrites=true&w=majority&appName=Cluster0',
     connectOptions: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
+  }),
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  collections: [Pages, Products, Orders, Media, Categories, Users],
+  globals: [Settings, Header, Footer],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
-  cors: [
-    'https://checkout.stripe.com',
-    process.env.PAYLOAD_PUBLIC_SERVER_URL || '',
-  ].filter(Boolean),
-  csrf: [
-    'https://checkout.stripe.com',
-    process.env.PAYLOAD_PUBLIC_SERVER_URL || '',
-  ].filter(Boolean),
+  cors: ['https://checkout.stripe.com', process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(
+    Boolean,
+  ),
+  csrf: ['https://checkout.stripe.com', process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(
+    Boolean,
+  ),
   endpoints: [
     {
       path: '/create-payment-intent',
@@ -126,8 +108,6 @@ export default buildConfig({
       method: 'get',
       handler: productsProxy,
     },
-    // The seed endpoint is used to populate the database with some example data
-    // You should delete this endpoint before deploying your site to production
     {
       path: '/seed',
       method: 'get',
