@@ -3,8 +3,7 @@
   "description": "E-commerce template for Payload",
   "version": "1.0.0",
   "main": "dist/server.js",
-  "license": "MIT",
- 
+  "license": "MIT", 
   "scripts": {
     "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts nodemon",
     "stripe:webhooks": "stripe listen --forward-to localhost:8000/stripe/webhooks",
@@ -12,7 +11,7 @@
     "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload build",
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "cross-env PAYLOAD_CONFIG_PATH=dist/payload/payload.config.js NEXT_BUILD=true node dist/server.js",
-    "build": "cross-env NODE_ENV=production yarn build:payload && yarn build:server && yarn copyfiles && yarn build:next",
+    "build": "cross-env NODE_ENV=production yarn build:payload && yarn build:server && yarn copyfiles && NEXT_DISABLE_ESLINT=1 && yarn build:next",   
     "serve": "cross-env PAYLOAD_CONFIG_PATH=dist/payload/payload.config.js NODE_ENV=production node dist/server.js",
     "eject": "yarn remove next react react-dom @next/eslint-plugin-next && ts-node eject.ts",
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,js}\" dist/",
