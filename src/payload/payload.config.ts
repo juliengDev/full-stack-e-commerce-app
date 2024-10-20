@@ -90,6 +90,12 @@ export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
   collections: [Pages, Products, Orders, Media, Categories, Users],
   globals: [Settings, Header, Footer],
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI || 'mongodb+srv://juliengilbertdev:rLdZJ3jRdatz3v5d@cluster0.w63np.mongodb.net/mycollection?retryWrites=true&w=majority&appName=Cluster0',
+    connectOptions: {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
