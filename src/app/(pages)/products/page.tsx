@@ -10,9 +10,13 @@ import { HR } from '../../_components/HR'
 import Filters from './Filters'
 
 import classes from './index.module.scss'
+import mongoose from 'mongoose'
 
 const Products = async () => {
   const { isEnabled: isDraftMode } = draftMode()
+  mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDB:', mongoose.connection.db.databaseName)
+  })
 
   let page: Page | null = null
   let categories: Category[] | null = null
