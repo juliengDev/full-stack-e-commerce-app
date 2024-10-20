@@ -4,7 +4,8 @@ const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
   siteName: 'Payload E-Commerce Template',
   title: 'Payload E-Commerce Template',
-  description: 'An open-source e-commerce store built with Payload and Next.js.',
+  description:
+    'An open-source e-commerce store built with Payload and Next.js.',
   images: [
     {
       url: 'https://payloadcms.com/images/og-image.jpg',
@@ -12,7 +13,9 @@ const defaultOpenGraph: Metadata['openGraph'] = {
   ],
 }
 
-export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {
+export const mergeOpenGraph = (
+  og?: Metadata['openGraph'],
+): Metadata['openGraph'] => {
   return {
     ...defaultOpenGraph,
     ...og,

@@ -3,7 +3,8 @@ import { FOOTER_QUERY, HEADER_QUERY, SETTINGS_QUERY } from '../_graphql/globals'
 import { GRAPHQL_API_URL } from './shared'
 
 export async function fetchSettings(): Promise<Settings> {
-  if (!process.env.NEXT_PUBLIC_SERVER_URL) throw new Error('NEXT_PUBLIC_SERVER_URL not found')
+  if (!process.env.NEXT_PUBLIC_SERVER_URL)
+    throw new Error('NEXT_PUBLIC_SERVER_URL not found')
 
   const settings = await fetch(`${GRAPHQL_API_URL}/api/graphql`, {
     method: 'POST',
@@ -20,7 +21,8 @@ export async function fetchSettings(): Promise<Settings> {
       return res.json()
     })
     ?.then(res => {
-      if (res?.errors) throw new Error(res?.errors[0]?.message || 'Error fetching settings')
+      if (res?.errors)
+        throw new Error(res?.errors[0]?.message || 'Error fetching settings')
       return res.data?.Settings
     })
 
@@ -45,7 +47,8 @@ export async function fetchHeader(): Promise<Header> {
       return res.json()
     })
     ?.then(res => {
-      if (res?.errors) throw new Error(res?.errors[0]?.message || 'Error fetching header')
+      if (res?.errors)
+        throw new Error(res?.errors[0]?.message || 'Error fetching header')
       return res.data?.Header
     })
 
@@ -69,7 +72,8 @@ export async function fetchFooter(): Promise<Footer> {
       return res.json()
     })
     ?.then(res => {
-      if (res?.errors) throw new Error(res?.errors[0]?.message || 'Error fetching footer')
+      if (res?.errors)
+        throw new Error(res?.errors[0]?.message || 'Error fetching footer')
       return res.data?.Footer
     })
 
@@ -88,11 +92,8 @@ export const fetchGlobals = async (): Promise<{
   const headerData = fetchHeader()
   const footerData = fetchFooter()
 
-  const [settings, header, footer]: [Settings, Header, Footer] = await Promise.all([
-    await settingsData,
-    await headerData,
-    await footerData,
-  ])
+  const [settings, header, footer]: [Settings, Header, Footer] =
+    await Promise.all([await settingsData, await headerData, await footerData])
 
   return {
     settings,

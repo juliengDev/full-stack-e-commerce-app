@@ -44,4 +44,8 @@ export const profileNavItems = [
   },
 ]
 
-export const noHeaderFooterUrls = ['/create-account', '/login', '/recover-password']
+export const noHeaderFooterUrls = [
+  '/create-account',
+  '/login',
+  '/recover-password',
+]

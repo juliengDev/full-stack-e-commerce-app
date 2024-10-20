@@ -26,65 +26,65 @@ const richText: RichText = (
     leaves: [],
   },
 ) => {
-  const slateOptions = deepMerge<AdapterArguments['admin'], AdapterArguments['admin']>(
-    overrides?.admin || {},
-    {
-      upload: {
-        collections: {
-          media: {
-            fields: [
-              {
-                type: 'richText',
-                name: 'caption',
-                label: 'Caption',
-                editor: slateEditor({
-                  admin: {
-                    elements: [...elements],
-                    leaves: [...leaves],
-                  },
-                }),
-              },
-              {
-                type: 'radio',
-                name: 'alignment',
-                label: 'Alignment',
-                options: [
-                  {
-                    label: 'Left',
-                    value: 'left',
-                  },
-                  {
-                    label: 'Center',
-                    value: 'center',
-                  },
-                  {
-                    label: 'Right',
-                    value: 'right',
-                  },
-                ],
-              },
-              {
-                name: 'enableLink',
-                type: 'checkbox',
-                label: 'Enable Link',
-              },
-              link({
-                appearances: false,
-                disableLabel: true,
-                overrides: {
-                  admin: {
-                    condition: (_, data) => Boolean(data?.enableLink),
-                  },
+  const slateOptions = deepMerge<
+    AdapterArguments['admin'],
+    AdapterArguments['admin']
+  >(overrides?.admin || {}, {
+    upload: {
+      collections: {
+        media: {
+          fields: [
+            {
+              type: 'richText',
+              name: 'caption',
+              label: 'Caption',
+              editor: slateEditor({
+                admin: {
+                  elements: [...elements],
+                  leaves: [...leaves],
                 },
               }),
-            ],
-          },
+            },
+            {
+              type: 'radio',
+              name: 'alignment',
+              label: 'Alignment',
+              options: [
+                {
+                  label: 'Left',
+                  value: 'left',
+                },
+                {
+                  label: 'Center',
+                  value: 'center',
+                },
+                {
+                  label: 'Right',
+                  value: 'right',
+                },
+              ],
+            },
+            {
+              name: 'enableLink',
+              type: 'checkbox',
+              label: 'Enable Link',
+            },
+            link({
+              appearances: false,
+              disableLabel: true,
+              overrides: {
+                admin: {
+                  condition: (_, data) => Boolean(data?.enableLink),
+                },
+              },
+            }),
+          ],
         },
       },
-      elements: [...elements, ...(additions.elements || [])],
-      leaves: [...leaves, ...(additions.leaves || [])],
     },
-  )
+    elements: [...elements, ...(additions.elements || [])],
+    leaves: [...leaves, ...(additions.leaves || [])],
+  })
 
   const fieldOverrides = {
     ...(overrides || {}),

@@ -25,7 +25,11 @@ type LinkType = (options?: {
   overrides?: Record<string, unknown>
 }) => Field
 
-const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
+const link: LinkType = ({
+  appearances,
+  disableLabel = false,
+  overrides = {},
+} = {}) => {
   const linkResult: Field = {
     name: 'link',
     type: 'group',
@@ -136,7 +140,9 @@ const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = 
     ]
 
     if (appearances) {
-      appearanceOptionsToUse = appearances.map(appearance => appearanceOptions[appearance])
+      appearanceOptionsToUse = appearances.map(
+        appearance => appearanceOptions[appearance],
+      )
     }
 
     linkResult.fields.push({

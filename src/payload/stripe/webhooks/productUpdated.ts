@@ -16,7 +16,10 @@ export const productUpdated: StripeWebhookHandler<{
     // description: stripeDescription,
   } = event.data.object
 
-  if (logs) payload.logger.info(`Syncing Stripe product with ID: ${stripeProductID} to Payload...`)
+  if (logs)
+    payload.logger.info(
+      `Syncing Stripe product with ID: ${stripeProductID} to Payload...`,
+    )
 
   let payloadProductID
 
@@ -49,7 +52,10 @@ export const productUpdated: StripeWebhookHandler<{
   let prices
 
   try {
-    if (logs) payload.logger.info(`- Looking up all prices associated with this product...`)
+    if (logs)
+      payload.logger.info(
+        `- Looking up all prices associated with this product...`,
+      )
 
     // find all stripe prices that are assigned to "payloadProductID"
     prices = await stripe.prices.list({

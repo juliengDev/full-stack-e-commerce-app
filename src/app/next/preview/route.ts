@@ -26,17 +26,22 @@ export async function GET(
   }
 
   // validate the Payload token
-  const userReq = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`, {
-    headers: {
-      Authorization: `JWT ${token}`,
+  const userReq = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`,
+    {
+      headers: {
+        Authorization: `JWT ${token}`,
+      },
     },
-  })
+  )
 
   const userRes = await userReq.json()
 
   if (!userReq.ok || !userRes?.user) {
     draftMode().disable()
-    return new Response('You are not allowed to preview this page', { status: 403 })
+    return new Response('You are not allowed to preview this page', {
+      status: 403,
+    })
   }
 
   if (secret !== process.env.NEXT_PRIVATE_DRAFT_SECRET) {

@@ -5,7 +5,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2022-08-01',
 })
 
-export const createStripeCustomer: BeforeChangeHook = async ({ req, data, operation }) => {
+export const createStripeCustomer: BeforeChangeHook = async ({
+  req,
+  data,
+  operation,
+}) => {
   if (operation === 'create' && !data.stripeCustomerID) {
     try {
       // lookup an existing customer by email and if found, assign the ID to the user

@@ -11,7 +11,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 // to do this, we loop through the items in the cart and lookup the product in Stripe
 // we then add the price of the product to the total
 // once completed, we pass the `client_secret` of the `PaymentIntent` back to the client which can process the payment
-export const createPaymentIntent: PayloadHandler = async (req, res): Promise<void> => {
+export const createPaymentIntent: PayloadHandler = async (
+  req,
+  res,
+): Promise<void> => {
   const { user, payload } = req
 
   if (!user) {
@@ -78,7 +81,9 @@ export const createPaymentIntent: PayloadHandler = async (req, res): Promise<voi
         })
 
         if (prices.data.length === 0) {
-          res.status(404).json({ error: 'There are no items in your cart to checkout with' })
+          res
+            .status(404)
+            .json({ error: 'There are no items in your cart to checkout with' })
           return null
         }
 
@@ -90,7 +95,9 @@ export const createPaymentIntent: PayloadHandler = async (req, res): Promise<voi
     )
 
     if (total === 0) {
-      throw new Error('There is nothing to pay for, add some items to your cart and try again.')
+      throw new Error(
+        'There is nothing to pay for, add some items to your cart and try again.',
+      )
     }
 
     const paymentIntent = await stripe.paymentIntents.create({

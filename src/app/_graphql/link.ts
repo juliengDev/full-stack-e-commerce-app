@@ -3,7 +3,10 @@ interface Args {
   disableAppearance?: true
 }
 
-export const LINK_FIELDS = ({ disableAppearance, disableLabel }: Args = {}): string => `{
+export const LINK_FIELDS = ({
+  disableAppearance,
+  disableLabel,
+}: Args = {}): string => `{
   ${!disableLabel ? 'label' : ''}
   ${!disableAppearance ? 'appearance' : ''}
   type

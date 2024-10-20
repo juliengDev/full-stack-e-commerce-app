@@ -15,12 +15,20 @@ const logs = process.env.LOGS_STRIPE_PROXY === '1'
 // GET /api/users/:id/customer
 // POST /api/users/:id/customer
 // body: { customer: Stripe.CustomerUpdateParams }
-export const customerProxy: PayloadHandler = async (req: PayloadRequest, res) => {
+export const customerProxy: PayloadHandler = async (
+  req: PayloadRequest,
+  res,
+) => {
   const { userID } = req.params
 
   if (!req.user) {
-    if (logs) req.payload.logger.error({ err: `You are not authorized to access this customer` })
-    res.status(401).json({ error: 'You are not authorized to access this customer' })
+    if (logs)
+      req.payload.logger.error({
+        err: `You are not authorized to access this customer`,
+      })
+    res
+      .status(401)
+      .json({ error: 'You are not authorized to access this customer' })
     return
   }
 
@@ -48,13 +56,17 @@ export const customerProxy: PayloadHandler = async (req: PayloadRequest, res) =>
       })
 
       if (customer.deleted) {
-        res.status(404).json({ error: `Customer ${req.user.stripeCustomerID} not found` })
+        res
+          .status(404)
+          .json({ error: `Customer ${req.user.stripeCustomerID} not found` })
         return
       }
 
       // ensure the customer belongs to the user
       if (customer.id !== req.user.stripeCustomerID) {
-        res.status(401).json({ error: `You are not authorized to access this customer` })
+        res
+          .status(401)
+          .json({ error: `You are not authorized to access this customer` })
         return
       }
     }
@@ -68,12 +80,16 @@ export const customerProxy: PayloadHandler = async (req: PayloadRequest, res) =>
     if (req.method === 'PATCH') {
       if (!req.body) throw new Error('No customer data provided')
       // TODO: lock down the spread `customer` object to only allow certain fields
-      response = await stripe.customers.update(req.user.stripeCustomerID, req.body)
+      response = await stripe.customers.update(
+        req.user.stripeCustomerID,
+        req.body,
+      )
     }
 
     res.status(200).json(response)
   } catch (error: unknown) {
-    if (logs) req.payload.logger.error({ err: `Error using Stripe API: ${error}` })
+    if (logs)
+      req.payload.logger.error({ err: `Error using Stripe API: ${error}` })
     res.status(500).json({ error: `Error using Stripe API: ${error}` })
   }
 }

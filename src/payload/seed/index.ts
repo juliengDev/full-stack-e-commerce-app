@@ -195,7 +195,10 @@ export const seed = async (payload: Payload): Promise<void> => {
   await payload.create({
     collection: 'pages',
     data: JSON.parse(
-      JSON.stringify(cartPage).replace(/"\{\{PRODUCTS_PAGE_ID\}\}"/g, productsPageID),
+      JSON.stringify(cartPage).replace(
+        /"\{\{PRODUCTS_PAGE_ID\}\}"/g,
+        productsPageID,
+      ),
     ),
   })
 

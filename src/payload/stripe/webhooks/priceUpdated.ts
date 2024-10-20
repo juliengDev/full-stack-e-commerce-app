@@ -11,7 +11,8 @@ export const priceUpdated: StripeWebhookHandler<{
   const { event, payload, stripe } = args
 
   const stripeProduct = event.data.object.product
-  const stripeProductID = typeof stripeProduct === 'string' ? stripeProduct : stripeProduct.id
+  const stripeProductID =
+    typeof stripeProduct === 'string' ? stripeProduct : stripeProduct.id
 
   if (logs)
     payload.logger.info(

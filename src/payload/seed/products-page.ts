@@ -6,7 +6,8 @@ export const productsPage: Omit<Page, 'updatedAt' | 'createdAt' | 'id'> = {
   _status: 'published',
   meta: {
     title: 'Shop all products',
-    description: 'Shop everything from goods and services to digital assets and gated content.',
+    description:
+      'Shop everything from goods and services to digital assets and gated content.',
   },
   hero: {
     type: 'lowImpact',

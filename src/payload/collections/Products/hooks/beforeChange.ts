@@ -30,7 +30,8 @@ export const beforeProductChange: BeforeChangeHook = async ({ req, data }) => {
 
   try {
     const stripeProduct = await stripe.products.retrieve(data.stripeProductID)
-    if (logs) payload.logger.info(`Found product from Stripe: ${stripeProduct.name}`)
+    if (logs)
+      payload.logger.info(`Found product from Stripe: ${stripeProduct.name}`)
     // newDoc.name = stripeProduct.name;
     newDoc.description = stripeProduct.description
   } catch (error: unknown) {
